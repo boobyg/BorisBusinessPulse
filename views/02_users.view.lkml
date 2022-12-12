@@ -171,7 +171,7 @@ view: users {
 
   dimension: history {
     sql: ${TABLE}.id ;;
-    html: <a href="/explore/thelook_event/order_items?fields=order_items.detail*&f[users.id]={{ value }}">Order History</a>
+    html: <a href="/explore/business_pulse_event/order_items?fields=order_items.detail*&f[users.id]={{ value }}">Order History</a>
       ;;
   }
 

@@ -1,6 +1,6 @@
 include: "/views/**/*.view" # include all the views
 
-# Place in `thelook` model
+# Place in `business_pulse` model
 explore: +order_items {
   query: high_value_geos {
     description: "States delivering high gross margins over the past 90 days"
@@ -54,7 +54,7 @@ explore: +order_items {
     }
 }
 
-# Place in `thelook` model
+# Place in `business_pulse` model
 explore: +order_items {
     query: severely_delayed_orders {
       description: "Orders that are still in Processing after 3 days, filtered by Distribution Center"
