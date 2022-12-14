@@ -31,11 +31,11 @@ view: order_items {
     label: "Count Sold in Trailing 28 Days"
     type: count_distinct
     sql: ${id} ;;
-    hidden: yes
     filters:
     {field:created_date
       value: "28 days"
     }}
+
 
     measure: count_last_7d {
       label: "Count Sold in Trailing 7 Days"
