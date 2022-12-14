@@ -34,7 +34,19 @@ view: order_items {
     filters:
     {field:created_date
       value: "28 days"
-    }}
+    }
+    }
+
+  measure: count_last_7d {
+    label: "Count Sold in Trailing 7 Days"
+    type: count_distinct
+    sql: ${id};;
+    filters:     {field:created_date
+      value: "7 days"
+    }
+
+  }
+
 
   measure: order_count {
     view_label: "Orders"
