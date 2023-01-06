@@ -202,11 +202,6 @@ view: users {
     type: count
     drill_fields: [detail*]
   }
-  measure: feature_count {
-    type: number
-    sql: ${count} + 1.20 ;;
-    drill_fields: [detail*]
-  }
 
   measure: count_percent_of_total {
     label: "Count (Percent of Total)"
