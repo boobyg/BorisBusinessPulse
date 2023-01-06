@@ -202,7 +202,10 @@ view: users {
     type: count
     drill_fields: [detail*]
   }
-
+measure: count_future {
+  type: number
+  sql: ${count} * 1.20 ;;
+}
   measure: count_percent_of_total {
     label: "Count (Percent of Total)"
     type: percent_of_total
