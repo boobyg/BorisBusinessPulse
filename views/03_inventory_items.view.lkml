@@ -105,6 +105,11 @@ view: inventory_items {
     type: count
     drill_fields: [detail*]
   }
+  measure: future_count {
+    type: number
+    sql: ${count} * 1.20 ;;
+  }
+
 
   measure: number_on_hand {
     type: count
