@@ -3,6 +3,8 @@ view: order_items {
 
   ########## IDs, Foreign Keys, Counts ###########
 
+  #comment
+
   dimension: id {
     primary_key: yes
     type: number
