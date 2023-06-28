@@ -294,42 +294,62 @@ measure: count_last_7d {
   }
 
   #POP
-  filter: current_date_range {
+  dimension: current_date_range_d {
     type: date
     view_label: "_PoP"
     label: "1. Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Event Date covers this period, or is removed."
-    sql: ${created_raw} IS NOT NULL ;;
+    sql: ${created_raw};;
+  }
+  filter: current_date_range {
+    hidden: yes
+    type: date
+    view_label: "_PoP"
+    label: "1. Current Date Range"
+    description: "Select the current date range you are interested in. Make sure any other filter on Event Date covers this period, or is removed."
+    sql: ${current_date_range_d}  IS NOT NULL ;;
   }
 
-  parameter: compare_to {
+  dimension: compare_to {
     view_label: "_PoP"
     description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
     label: "2. Compare To:"
-    type: unquoted
-    allowed_value: {
-      label: "Previous Period"
-      value: "Period"
+     sql: "Period";;
+
     }
-#     allowed_value: {
-#       label: "Previous Week"
-#       value: "Week"
-#     }
-#     allowed_value: {
-#       label: "Previous Month"
-#       value: "Month"
-#     }
-#     allowed_value: {
-#       label: "Previous Quarter"
-#       value: "Quarter"
-#     }
-#     allowed_value: {
-#       label: "Previous Year"
-#       value: "Year"
-#     }
-#     default_value: "Period"
-# #    view_label: "_PoP"
-  }
+
+
+    parameter: compare_to_p {
+      hidden: yes
+      view_label: "_PoP"
+      description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
+      label: "2. Compare To:"
+      type: unquoted
+      allowed_value: {
+        label: "Previous Period"
+        value: "Period"
+      }
+      allowed_value: {
+        label: "Previous Week"
+        value: "Week"
+      }
+      allowed_value: {
+        label: "Previous Month"
+        value: "Month"
+      }
+      allowed_value: {
+        label: "Previous Quarter"
+        value: "Quarter"
+      }
+      allowed_value: {
+        label: "Previous Year"
+        value: "Year"
+      }
+      default_value: "Period"
+
+    }
+
+
   dimension: days_in_period {
     hidden:  yes
     view_label: "_PoP"
@@ -425,7 +445,8 @@ measure: count_last_7d {
     description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
     label: "Current Period"
     type: time
-#    sql: DATE_ADD( DATE({% date_start current_date_range %}), INTERVAL ${day_in_period} - 1 DAY) ;;
+ #  sql: DATE_ADD( DATE({% date_start current_date_range %}), INTERVAL -(${day_in_period} - 1) DAY) ;;
+
     sql: DATE_SUB(DATE({% date_start current_date_range %}), INTERVAL (${day_in_period} - 1) DAY)  ;;
     view_label: "_PoP"
     timeframes: [
@@ -452,9 +473,11 @@ measure: count_last_7d {
             {% if current_date_range._is_filtered %}
                 CASE
                 WHEN {% condition current_date_range %} TIMESTAMP(${pop_parameters_day_raw}) {% endcondition %}
-                THEN 'This {% parameter compare_to %}'
+                --THEN 'This {% parameter compare_to %}'
+                  THEN 'This Period'  --#bg to display in LS Pro
                 WHEN ${pop_parameters_day_date} between ${period_2_start} and ${period_2_end}
-                THEN 'Last {% parameter compare_to %}'
+                --THEN 'Last {% parameter compare_to %}'
+                 THEN 'Last Period'  --#bg to display in LS Pro
                 END
             {% else %}
                 NULL
