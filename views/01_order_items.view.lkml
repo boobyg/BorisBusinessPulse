@@ -295,19 +295,21 @@ measure: count_last_7d {
 
   #POP
   dimension: current_date_range_d {
+    hidden: yes
     type: date
     view_label: "_PoP"
     label: "1. Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Event Date covers this period, or is removed."
     sql: ${created_raw};;
   }
-  filter: current_date_range {
-    hidden: yes
+  dimension: current_date_range {
+    hidden: no
     type: date
     view_label: "_PoP"
     label: "1. Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Event Date covers this period, or is removed."
-    sql: ${current_date_range_d}  IS NOT NULL ;;
+    sql:    ${created_raw} --IS NOT NULL ;;
+#    sql: ${current_date_range_d}  IS NOT NULL ;;
   }
 
   dimension: compare_to {
@@ -395,9 +397,9 @@ measure: count_last_7d {
         {% if current_date_range._is_filtered %}
             CASE
             WHEN {% condition current_date_range %} ${created_raw} {% endcondition %}
-            THEN DATE_DIFF(DATE, DATE({% date_start current_date_range %}), ${created_date}) + 1
+            THEN DATE_DIFF(DATE({% date_start current_date_range %}), ${created_date}, DAY) + 1
             WHEN ${created_date} between ${period_2_start} and ${period_2_end}
-            THEN DATE_DIFF(DATE, ${period_2_start}, ${created_date}) + 1
+            THEN DATE_DIFF(${period_2_start}, ${created_date}, DAY) + 1
             END
         {% else %} NULL
         {% endif %}
@@ -428,11 +430,10 @@ measure: count_last_7d {
   measure: previous_period_margin {
     view_label: "_PoP"
     type: sum
-    sql:${gross_margin} ;;
+    sql:${gross_margin};;
     filters: [period_filtered_measures: "last"]
     value_format_name: usd_0
   }
-
 
   ## ------- HIDING FIELDS  FROM ORIGINAL VIEW FILE  -------- ##
 
@@ -477,7 +478,7 @@ measure: count_last_7d {
                   THEN 'This Period'  --#bg to display in LS Pro
                 WHEN ${pop_parameters_day_date} between ${period_2_start} and ${period_2_end}
                 --THEN 'Last {% parameter compare_to %}'
-                 THEN 'Last Period'  --#bg to display in LS Pro
+                  THEN 'Last Period'  --#bg to display in LS Pro
                 END
             {% else %}
                 NULL
