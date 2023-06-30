@@ -361,7 +361,7 @@ measure: count_last_7d {
   }
 
   dimension: period_2_start {
-    hidden:  yes
+    hidden:  no
     view_label: "_PoP"
     description: "Calculates the start of the previous period"
     type: date
@@ -376,7 +376,7 @@ measure: count_last_7d {
   }
 
   dimension: period_2_end {
-    hidden:  yes
+    hidden:  no
     view_label: "_PoP"
     description: "Calculates the end of the previous period"
     type: date
