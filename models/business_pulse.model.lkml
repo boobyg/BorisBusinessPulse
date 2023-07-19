@@ -327,4 +327,6 @@ explore: ecomm_predict {
     relationship: many_to_one
     sql_on: ${order_facts.order_id} = ${order_items.order_id} ;;
   }
+
 }
+explore: deleteme {}

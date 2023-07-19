@@ -302,27 +302,35 @@ measure: count_last_7d {
     description: "Select the current date range you are interested in. Make sure any other filter on Event Date covers this period, or is removed."
     sql: ${created_raw};;
   }
-  dimension: current_date_range {
-    hidden: no
+#   filter: current_date_range {
+#     hidden: no
+#     type: date
+#     view_label: "_PoP"
+#     label: "1. Current Date Range"
+#     description: "Select the current date range you are interested in. Make sure any other filter on Event Date covers this period, or is removed."
+#     sql:    ${created_raw} --IS NOT NULL ;;
+# #    sql: ${current_date_range_d}  IS NOT NULL ;;
+#  }
+  filter: current_date_range {
     type: date
     view_label: "_PoP"
     label: "1. Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Event Date covers this period, or is removed."
-    sql:    ${created_raw} --IS NOT NULL ;;
-#    sql: ${current_date_range_d}  IS NOT NULL ;;
+    sql: ${created_raw} IS NOT NULL ;;
+    convert_tz: no
   }
 
+
   dimension: compare_to {
+    hidden:yes
     view_label: "_PoP"
     description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
     label: "2. Compare To:"
      sql: "Period";;
-
     }
 
-
     parameter: compare_to_p {
-      hidden: yes
+      hidden: no
       view_label: "_PoP"
       description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
       label: "2. Compare To:"
@@ -361,33 +369,33 @@ measure: count_last_7d {
   }
 
   dimension: period_2_start {
-    hidden:  no
+    # hidden:  yes
     view_label: "_PoP"
     description: "Calculates the start of the previous period"
     type: date
-    sql: DATE_ADD({% date_start current_date_range %}, INTERVAL + ${days_in_period} DAY);;
-
-    # sql:
-    #         {% if compare_to._parameter_value == "Period" %}
-    #         DATE_ADD(DATE({% date_start current_date_range %}), -${days_in_period})
-    #         {% else %}
-    #         DATE_ADD({% parameter compare_to %}, -1, DATE({% date_start current_date_range %}))
-    #         {% endif %};;
+    sql:
+        {% if compare_to_p._parameter_value == "Period" %}
+        DATE_ADD(DATE({% date_start current_date_range %}), INTERVAL ${days_in_period} DAY)
+        {% else %}
+        DATE_SUB(DATE({% date_start current_date_range %}), INTERVAL 1 {% parameter compare_to %})
+        {% endif %};;
+    convert_tz: no
   }
 
   dimension: period_2_end {
-    hidden:  no
+    # hidden:  yes
     view_label: "_PoP"
     description: "Calculates the end of the previous period"
     type: date
-    sql:  DATE({% date_end current_date_range %}) + ${days_in_period};;
-  #   sql:
-  #           {% if compare_to._parameter_value == "Period" %}
-  #           DATE_ADD(DATE, -1, DATE({% date_start current_date_range %}))
-  #           {% else %}
-  #           DATE_ADD({% parameter compare_to %}, -1, DATE_ADD(DATE, -1, DATE({% date_end current_date_range %})))
-  #           {% endif %};;
-   }
+    sql:
+        {% if compare_to_p._parameter_value == "Period" %}
+        DATE_SUB(DATE({% date_start current_date_range %}), INTERVAL 1 DAY)
+        {% else %}
+        DATE_SUB(DATE_SUB(DATE({% date_end current_date_range %}), INTERVAL 1 DAY), INTERVAL 1 {% parameter compare_to %})
+        {% endif %};;
+    convert_tz: no
+  }
+
 
   dimension: day_in_period {
     hidden: yes
@@ -407,14 +415,15 @@ measure: count_last_7d {
   }
 
   dimension: period_filtered_measures {
-    hidden: yes
+    hidden: no
     description: "We just use this for the filtered measures"
     type: string
     sql:
             {% if current_date_range._is_filtered %}
                 CASE
+                WHEN ${created_date} between ${period_2_start} and ${period_2_end} THEN 'last'
                 WHEN {% condition current_date_range %} ${created_raw} {% endcondition %} THEN 'this'
-                WHEN ${created_date} between ${period_2_start} and ${period_2_end} THEN 'last' END
+                END
             {% else %} NULL {% endif %} ;;
   }
 
