@@ -369,7 +369,7 @@ measure: count_last_7d {
   }
 
   dimension: period_2_start {
-    # hidden:  yes
+     hidden:  yes
     view_label: "_PoP"
     description: "Calculates the start of the previous period"
     type: date
@@ -383,7 +383,7 @@ measure: count_last_7d {
   }
 
   dimension: period_2_end {
-    # hidden:  yes
+     hidden:  yes
     view_label: "_PoP"
     description: "Calculates the end of the previous period"
     type: date
@@ -415,7 +415,7 @@ measure: count_last_7d {
   }
 
   dimension: period_filtered_measures {
-    hidden: no
+    hidden: yes
     description: "We just use this for the filtered measures"
     type: string
     sql:
@@ -446,7 +446,7 @@ measure: count_last_7d {
 
   ## ------- HIDING FIELDS  FROM ORIGINAL VIEW FILE  -------- ##
 
-  dimension_group: pop_parameters_day {  type: time timeframes: [date,raw] hidden: yes}
+  dimension_group: pop_parameters_day { type: time timeframes: [date,raw] hidden: yes}
   dimension: ytd_only {hidden:yes}
   dimension: mtd_only {hidden:yes}
   dimension: wtd_only {hidden:yes}
@@ -482,10 +482,10 @@ measure: count_last_7d {
     sql:
             {% if current_date_range._is_filtered %}
                 CASE
-                WHEN {% condition current_date_range %} TIMESTAMP(${pop_parameters_day_raw}) {% endcondition %}
+                WHEN {% condition current_date_range %} TIMESTAMP(${created_raw}) {% endcondition %}
                 --THEN 'This {% parameter compare_to %}'
                   THEN 'This Period'  --#bg to display in LS Pro
-                WHEN ${pop_parameters_day_date} between ${period_2_start} and ${period_2_end}
+                WHEN ${created_date} between ${period_2_start} and ${period_2_end}
                 --THEN 'Last {% parameter compare_to %}'
                   THEN 'Last Period'  --#bg to display in LS Pro
                 END
@@ -501,9 +501,9 @@ measure: count_last_7d {
     sql:
             {% if current_date_range._is_filtered %}
                 CASE
-                WHEN {% condition current_date_range %} TIMESTAMP(${pop_parameters_day_raw}) {% endcondition %}
+                WHEN {% condition current_date_range %} TIMESTAMP(${created_raw}) {% endcondition %}
                 THEN 1
-                WHEN ${pop_parameters_day_raw} between ${period_2_start} and ${period_2_end}
+                WHEN ${created_date} between ${period_2_start} and ${period_2_end}
                 THEN 2
                 END
             {% else %}
