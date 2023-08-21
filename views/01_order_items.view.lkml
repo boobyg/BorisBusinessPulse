@@ -679,6 +679,24 @@ measure: count_last_7d {
 
 ########## Sets ##########
 
+parameter: test_param {
+type: unquoted
+allowed_value: {
+  label: "id"
+  value: "id"
+}
+allowed_value: {
+  label: "status"
+  value: "status"
+}
+}
+
+dimension: dim1 {
+  type: string
+  sql: ${TABLE}.{% parameter test_param %} ;;
+}
+
+
   set: detail {
     fields: [order_id, status, created_date, sale_price, products.brand, products.item_name, users.portrait, users.name, users.email]
   }
