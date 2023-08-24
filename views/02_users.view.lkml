@@ -103,6 +103,8 @@ view: users {
   dimension: city {
     sql: ${TABLE}.city ;;
     drill_fields: [zip]
+    suggestable: no
+
   }
 
   dimension: state {

@@ -679,6 +679,9 @@ measure: count_last_7d {
 
 ########## Sets ##########
 
+
+
+#### test parameters for PBI connector for Greg ##############
 parameter: test_param {
 type: unquoted
 allowed_value: {
@@ -696,6 +699,7 @@ dimension: dim1 {
   sql: ${TABLE}.{% parameter test_param %} ;;
 }
 
+##################### end test parrameteres #########################
 
   set: detail {
     fields: [order_id, status, created_date, sale_price, products.brand, products.item_name, users.portrait, users.name, users.email]
