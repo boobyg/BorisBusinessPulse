@@ -83,6 +83,15 @@ view: cohort_size {
     allowed_value: { value: "Traffic Source" }
   }
 
+  parameter: cohort_filter2 {
+    label: "Cohort Picker"
+    description: "Choose a cohort"
+    allowed_value: { value: "User Signup Month" }
+    allowed_value: { value: "Gender" }
+    allowed_value: { value: "Age Group" }
+    allowed_value: { value: "Traffic Source" }
+  }
+
   parameter: metric_filter {
     label: "Metric Picker"
     description: "Choose a metric"

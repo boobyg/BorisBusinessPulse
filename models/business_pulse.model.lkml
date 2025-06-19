@@ -1,6 +1,6 @@
 connection: "ecomm"
 label: " Business Pulse"
-include: "queries*.view" # includes all queries refinements
+#include: "queries*.view" # includes all queries refinements
 include: "/views/**/*.view" # include all the views
 include: "/dashboards/*.dashboard.lookml" # include all the views
 
@@ -69,7 +69,11 @@ explore: order_items {
     type: left_outer
     sql_on: ${distribution_centers.id} = ${inventory_items.product_distribution_center_id} ;;
     relationship: many_to_one
-  }
+   }
+  # join: navigation {
+  #   relationship: one_to_one
+  #   sql_on:  1=1 ;;
+  # }
 }
 
 
@@ -329,4 +333,21 @@ explore: ecomm_predict {
   }
 
 }
-explore: deleteme {}
+explore: +order_items {
+#  label: "Aggregate Aware"
+  aggregate_table: rollup__users_state {
+    query: {
+      dimensions: [
+        users.state
+      ]
+      measures: [total_gross_margin]
+      group_label: "Aggregate Aware"
+      filters: [
+       ]
+    }
+
+    materialization: {
+      datagroup_trigger: ecommerce_etl
+    }
+  }
+}

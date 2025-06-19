@@ -677,9 +677,18 @@ measure: count_last_7d {
 #     sql: ${cohort_values_0} + ${cohort_values_1} ;;
 #   }
 
-########## Sets ##########
+#### New POP #####################
 
-
+  measure: order_count_last_month {
+    label: "New POP Orders Count"
+    view_label: "_PoP"
+    type: period_over_period
+    description: "Order count from the previous year"
+    based_on: count
+    based_on_time: order_items.created_month
+    period: month
+    kind: previous
+  }
 
 #### test parameters for PBI connector for Greg ##############
 parameter: test_param {
@@ -700,6 +709,8 @@ dimension: dim1 {
 }
 
 ##################### end test parrameteres #########################
+
+########## Sets ##########
 
   set: detail {
     fields: [order_id, status, created_date, sale_price, products.brand, products.item_name, users.portrait, users.name, users.email]

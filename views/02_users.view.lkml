@@ -103,7 +103,7 @@ view: users {
   dimension: city {
     sql: ${TABLE}.city ;;
     drill_fields: [zip]
-    suggestable: no
+    suggestable: yes
 
   }
 
@@ -203,6 +203,8 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+    filters: [state: "--New York"]
+
   }
 measure: count_future {
   type: number
@@ -221,6 +223,20 @@ measure: count_future {
     sql: ${age} ;;
     drill_fields: [detail*]
   }
+
+  dimension: menu {
+    sql: "Menu";;
+    html: "<p align="center">
+        <a href=https://google.com>
+        <img alt="altText" src=https://www.google.com/logos/doodles/2023/seasonal-holidays-2023-6753651837110165-6752733080612631-cst.gif
+        height="300" width="600" style="padding:2px;border:thin solid black;"/>
+        </a>
+        <a href=https://carrefour.com>
+        <img  alt="altText" src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuiDWGjT7Ie7cSXo26Ula5d6dt5MXdT02lBg&usqp=CAU
+        height="300" width="300" style="padding:2px;border:thin solid black;"/>
+        </a>
+        ;;
+    }
 
   set: detail {
     fields: [id, name, email, age, created_date, orders.count, order_items.count]

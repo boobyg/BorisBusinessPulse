@@ -78,7 +78,7 @@ view: user_order_facts {
 
   measure: average_lifetime_orders {
     type: average
-    value_format_name: decimal_2
+    value_format_name: decimal_0
     sql: ${lifetime_orders} ;;
   }
 
