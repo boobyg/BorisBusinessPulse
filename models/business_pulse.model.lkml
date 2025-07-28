@@ -9,8 +9,8 @@ include: "/dashboards/*.dashboard.lookml" # include all the views
 datagroup: ecommerce_etl {
   # sql_trigger: SELECT max(created_at) FROM ecomm.events ;;
   # max_cache_age: "24 hours"
-  max_cache_age: "999999 hours"  #do not change will rebuild PDTs and generate errors
-  sql_trigger: FALSE ;; #do not change will rebuild PDTs and generate errors
+  max_cache_age: "10 hours"  #do not change will rebuild PDTs and generate errors
+  sql_trigger: max (date_create) ;; #do not change will rebuild PDTs and generate errors
 }
 
 
@@ -351,3 +351,4 @@ explore: +order_items {
     }
   }
 }
+explore: charlesca {}

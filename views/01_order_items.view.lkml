@@ -256,7 +256,7 @@ measure: count_last_7d {
 
   dimension: sale_price {
     type: number
-    value_format_name: usd
+    value_format_name: eur
     sql: ${TABLE}.sale_price ;;
   }
 
