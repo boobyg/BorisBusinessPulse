@@ -262,7 +262,7 @@ measure: count_last_7d {
 
   dimension: gross_margin {
     type: number
-    value_format_name: usd
+    value_format_name: eur
     sql: ${sale_price} - ${inventory_items.cost} ;;
   }
 
@@ -281,14 +281,14 @@ measure: count_last_7d {
 
   measure: total_sale_price {
     type: sum
-    value_format_name: usd
+    value_format_name: eur
     sql: ${sale_price} ;;
     drill_fields: [detail*]
   }
 
   measure: total_gross_margin {
     type: sum
-    value_format_name: usd
+    value_format_name: eur
     sql: ${gross_margin} ;;
     drill_fields: [detail*]
   }
@@ -433,7 +433,7 @@ measure: count_last_7d {
     type: sum
     sql: ${gross_margin} ;;
     filters: [period_filtered_measures: "this"]
-    value_format_name: usd_0
+    value_format_name: eur_0
   }
 
   measure: previous_period_margin {
@@ -441,7 +441,7 @@ measure: count_last_7d {
     type: sum
     sql:${gross_margin};;
     filters: [period_filtered_measures: "last"]
-    value_format_name: usd_0
+    value_format_name: eur_0
   }
 
   ## ------- HIDING FIELDS  FROM ORIGINAL VIEW FILE  -------- ##
@@ -517,21 +517,21 @@ measure: count_last_7d {
 
   measure: average_sale_price {
     type: average
-    value_format_name: usd
+    value_format_name: eur
     sql: ${sale_price} ;;
     drill_fields: [detail*]
   }
 
   measure: median_sale_price {
     type: median
-    value_format_name: usd
+    value_format_name: eur
     sql: ${sale_price} ;;
     drill_fields: [detail*]
   }
 
   measure: average_gross_margin {
     type: average
-    value_format_name: usd
+    value_format_name: eur
     sql: ${gross_margin} ;;
     drill_fields: [detail*]
   }
@@ -544,7 +544,7 @@ measure: count_last_7d {
 
   measure: average_spend_per_user {
     type: number
-    value_format_name: usd
+    value_format_name: eur
     sql: 1.0 * ${total_sale_price} / nullif(${users.count},0) ;;
     drill_fields: [detail*]
   }
@@ -568,7 +568,7 @@ measure: count_last_7d {
 
   measure: returned_total_sale_price {
     type: sum
-    value_format_name: usd
+    value_format_name: eur
     sql: ${sale_price} ;;
     filters: {
       field: is_returned

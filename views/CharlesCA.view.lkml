@@ -3,6 +3,22 @@ view: charlesca {
 
   ## Demographics ##
 
+
+  parameter: date_eimear  {
+    type: string
+    default_value: "{{date_last_completed_months._value}}"
+  }
+
+  dimension: date_last_completed_months {
+    type: string
+    sql: date_trunc(current_date(), month) - 1 ;;
+  }
+
+  dimension: test_date {
+    type: string
+    sql: ${date_last_completed_months} ;;
+  }
+
   dimension: id {
     primary_key: yes
     type: number
