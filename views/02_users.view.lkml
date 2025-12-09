@@ -102,7 +102,7 @@ view: users {
 
   dimension: city {
     sql: ${TABLE}.city ;;
-    drill_fields: [zip]
+    drill_fields: [uk_postcode]
     suggestable: yes
 
   }
@@ -122,7 +122,7 @@ view: users {
     label: "UK Postcode"
     sql: case when ${TABLE}.country = 'UK' then regexp_replace(${zip}, '[0-9]', '') else null end;;
     map_layer_name: uk_postcode_areas
-    drill_fields: [city, zip]
+    drill_fields: [city, name, email]
   }
 
   dimension: country {

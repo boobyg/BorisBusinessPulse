@@ -242,7 +242,7 @@ measure: count_last_7d {
 
   measure: average_days_to_process {
     type: average
-    value_format_name: decimal_2
+    value_format_name: decimal_0
     sql: ${days_to_process} ;;
   }
 
