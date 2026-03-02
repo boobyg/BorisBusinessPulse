@@ -246,6 +246,12 @@ measure: count_last_7d {
     sql: ${days_to_process} ;;
   }
 
+   measure: average_days_to_process_future {
+    type: average
+    value_format_name: decimal_0
+    sql: ${days_to_process} * 1.2 ;;
+  }
+
   measure: average_shipping_time {
     type: average
     value_format_name: decimal_2
