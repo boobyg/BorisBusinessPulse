@@ -11,5 +11,5 @@ view: test {
     sql: ${TABLE}.id ;;
     value_format: "00000"
     }
-    
+    #delete this line in Looker
   }
