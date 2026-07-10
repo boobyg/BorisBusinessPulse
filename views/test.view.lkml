@@ -11,4 +11,5 @@ view: test {
     sql: ${TABLE}.id ;;
     value_format: "00000"
     }
+    
   }
