@@ -1,7 +1,7 @@
 name: content_validate
 env:
   DEMO_NAME: Ecommerce
-  PROJECT_NAME: business_pulse_event
+  PROJECT_NAME: business_pulse
   HOST: demo
 on:
 #   schedule:

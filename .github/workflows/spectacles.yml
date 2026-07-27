@@ -5,7 +5,7 @@ name: spectacles
 
 env:
   DEMO_NAME: Ecommerce
-  PROJECT_NAME: business_pulse_event
+  PROJECT_NAME: business_pulse
   HOST: demo
 on:
   pull_request:
@@ -35,8 +35,7 @@ jobs:
           --client-id ${{ secrets.CLIENT_ID }} \
           --client-secret ${{ secrets.CLIENT_SECRET }} \
           --project ${{ env.PROJECT_NAME }} \
-          --branch `if [ -z "${{ github.head_ref }}" ]; then echo master; else echo ${{ github.head_ref }}; fi` \
-          --remote-reset 
+          --branch `if [ -z "${{ github.head_ref }}" ]; then echo master; else echo ${{ github.head_ref }}; fi`
     - name: slack_notify_success
       if: success()
       uses: 8398a7/action-slack@v3
