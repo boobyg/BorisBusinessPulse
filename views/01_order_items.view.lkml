@@ -10,6 +10,7 @@ view: order_items {
     type: number
     sql: ${TABLE}.id ;;
     value_format: "00000"
+    description: "in VSCode"
   }
 
   dimension: inventory_item_id {
