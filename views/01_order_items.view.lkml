@@ -13,6 +13,10 @@ view: order_items {
     description: "in VSCode"
   }
 
+dimension: name  deleteMe{
+  
+}
+
   dimension: inventory_item_id {
     type: number
     hidden: yes
